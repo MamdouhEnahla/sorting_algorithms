@@ -1,50 +1,35 @@
 #include "sort.h"
 
 /**
- * calculate_gap - Calculates the initial gap.
- * @size: Size of the array.
- * Return: Initial gap.
- */
-size_t calculate_gap(size_t size)
-{
-	size_t gap = 1;
-
-	while (gap < size)
-		gap = gap * 3 + 1;
-
-	return (gap);
-}
-
-/**
- * shell_sort - Sorts an array using the Shell sort.
- * @array: Pointer to the array.
- * @size: Size of the array.
- */
+ * shell_sort - Sorts an array of in ascending order 
+ * @array: The array to be sorted
+ * @size: Number of elements
+*/
 void shell_sort(int *array, size_t size)
 {
-	size_t gap = calculate_gap(size);
+	size_t n, s, i, j;
+	int temp;
 
-	while (gap > 0)
+	if (size < 2)
+		return;
+
+	n = 1;
+	s = size;
+	while (n < s / 3)
+		n = n * 3 + 1;
+
+	while (n >= 1)
 	{
-		for (size_t i = gap; i < size; ++i)
+		for (i = n; i < s; i++)
 		{
-			int temp = array[i];
-			size_t j = i;
-
-			while (j >= gap && array[j - gap] > temp)
+			for (j = i; j >= n && array[j] < array[j - n]; j = j - n)
 			{
-				array[j] = array[j - gap];
-				j -= gap;
+				temp = array[j];
+				array[j] = array[j - n];
+				array[j - n] = temp;
 			}
-
-			array[j] = temp;
 		}
-
-		printf("Array after interval %zu:\n", gap);
-		for (size_t k = 0; k < size; ++k)
-			printf("%d ", array[k]);
-		printf("\n");
-
-		gap /= 3;
+		print_array(array, size);
+		n = n / 3;
 	}
 }
