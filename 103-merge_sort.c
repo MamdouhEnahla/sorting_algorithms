@@ -20,10 +20,10 @@ void compare_merge(int *array, size_t start, size_t stop, int *new)
 
 	for (k = start; k < stop; k++)
 	{
-		if (i < mid && j >= stop || array[i] <= array[j])
+		if ((i < mid && j >= stop) || array[i] <= array[j])
 			new[k] = array[i++];
 		else
-			new[k] = array[j++]
+			new[k] = array[j++];
 	}
 	printf("[Done]: ");
 	print_array(new + start, stop - start);
@@ -63,7 +63,7 @@ void merge_sort(int *array, size_t size)
 	temp = malloc(sizeof(int) * size);
 	if (!temp)
 		return;
-	for (i = 0; i < size; 1++)
+	for (i = 0; i < size; i++)
 		temp[i] = array[i];
 	sort_top_down(temp, 0, size, array);
 	free(temp);
